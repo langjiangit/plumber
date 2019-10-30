@@ -61,7 +61,7 @@ public class UpdateEventHandlerImpl extends AbstractEventHandler implements Even
         eventPluginData.setSourceTable(this.sourceTable);
         eventPluginData.setTargetDatabase(this.targetDatabase);
         eventPluginData.setTargetTable(this.targetTable);
-        eventPluginData.setKey(mapping.get(this.key));
+        eventPluginData.setKey(ids());
         for (EventDataExecuter eventPlugin : eventPlugins) {
             try {
                 eventPlugin.execute(eventPluginData);

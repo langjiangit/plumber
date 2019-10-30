@@ -21,7 +21,7 @@ public class TableMateData {
     /**
      * id 名称
      */
-    private String id;
+    private String[] ids;
 
     /**
      * 库名称

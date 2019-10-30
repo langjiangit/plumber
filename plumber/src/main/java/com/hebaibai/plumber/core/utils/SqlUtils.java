@@ -54,8 +54,16 @@ public class SqlUtils {
      * @param sql
      * @return
      */
-    public static String getId(String sql) {
-        return getByPattern(sql, "PRIMARY KEY \\(`(.*)`\\)", 1);
+    public static String[] getId(String sql) {
+        String ids = getByPattern(sql, "PRIMARY KEY \\(`(.*)`\\)", 1);
+        if (ids == null || ids.length() == 0) {
+            return null;
+        }
+        String[] split = ids.split(",");
+        for (int i = 0; i < split.length; i++) {
+            split[i] = split[i].replace("`", "");
+        }
+        return split;
     }
 
     /**

@@ -248,23 +248,25 @@ public class Main {
             }
         }
         //TODO 联合主键现在没有处理
-        String key = null;
+        String keys[] = null;
         //id有配置，按照配置
         if (eventHandlerJson.containsKey(PRIMARY_KEY)) {
-            key = eventHandlerJson.getString(PRIMARY_KEY);
+            keys = new String[]{eventHandlerJson.getString(PRIMARY_KEY)};
         }
         //id有没有配置，按照来源表中的id
         else {
-            key = sourceMateData.getId();
-            if (key == null || key.length() == 0) {
-                throw new RuntimeException(sourceMateData.getNama() + " primary key not find");
-            }
+            keys = sourceMateData.getIds();
+        }
+        if (keys == null) {
+            throw new RuntimeException(sourceMateData.getNama() + " primary key not find");
         }
         // mapping 中要包含 PRIMARY_KEY 字段
-        if (!map.containsKey(key)) {
-            throw new RuntimeException(sourceMateData.getNama() + " not find primary key in mapping");
+        for (String key : keys) {
+            if (!map.containsKey(key)) {
+                throw new RuntimeException(sourceMateData.getNama() + " not find primary key in mapping");
+            }
         }
-        eventHandler.setKey(key);
+        eventHandler.setKey(keys);
         return eventHandler;
     }
 

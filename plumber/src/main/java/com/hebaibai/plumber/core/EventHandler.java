@@ -82,7 +82,7 @@ public interface EventHandler {
     /**
      * 来源表中的key
      *
-     * @param key
+     * @param keys
      */
-    void setKey(String key);
+    void setKey(String[] keys);
 }

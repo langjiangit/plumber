@@ -19,7 +19,7 @@ public class TableMateDataUtils {
 
         TableMateData mateData = new TableMateData();
 
-        mateData.setId(SqlUtils.getId(createSql));
+        mateData.setIds(SqlUtils.getId(createSql));
 
         mateData.setNama(SqlUtils.getTableName(createSql));
 

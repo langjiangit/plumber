@@ -21,7 +21,7 @@ public class SqlEventData {
     }
 
     private String type;
-    private String key;
+    private String key[];
     private String targetDatabase;
     private String targetTable;
     private String sourceDatabase;

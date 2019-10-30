@@ -80,14 +80,8 @@ public class MysqlEventExecuter implements EventDataExecuter {
 
             //delete
             case SqlEventData.TYPE_DELETE:
-                for (Map.Entry<String, String> entry : sqlEventData.getAfter().entrySet()) {
-                    String key = entry.getKey();
-                    String value = entry.getValue();
-                    //是否是key
-                    boolean isKey = sqlEventData.getKey().equals(key);
-                    if (!isKey) {
-                        continue;
-                    }
+                for (String key : sqlEventData.getKey()) {
+                    String value = sqlEventData.getAfter().get(key);
                     if (value == null) {
                         wheres.add(key + " = null ");
                     } else {
@@ -109,20 +103,22 @@ public class MysqlEventExecuter implements EventDataExecuter {
                     String value = entry.getValue();
                     //变动之前的值
                     String beforValue = sqlEventData.getBefor().get(key);
-                    //是否是key
-                    boolean isKey = sqlEventData.getKey().equals(key);
-                    //不是key或者数据没有变化的，跳过
-                    if (!isKey && Objects.equals(value, beforValue)) {
+                    //数据没有变化的，跳过
+                    if (Objects.equals(value, beforValue)) {
                         continue;
-                    }
-                    //如果是key，以key为条件执行更新
-                    if (isKey) {
-                        wheres.add("`" + key + "` = '" + beforValue + "'");
                     }
                     if (value == null) {
                         updates.add("`" + key + "` = null");
                     } else {
                         updates.add("`" + key + "` = '" + value + "'");
+                    }
+                }
+                for (String key : sqlEventData.getKey()) {
+                    String value = sqlEventData.getBefor().get(key);
+                    if (value == null) {
+                        wheres.add(key + " = null ");
+                    } else {
+                        wheres.add("`" + key + "`" + " = '" + value + "' ");
                     }
                 }
                 // 没有更新项, 跳过

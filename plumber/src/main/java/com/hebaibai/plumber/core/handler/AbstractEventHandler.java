@@ -32,7 +32,7 @@ public abstract class AbstractEventHandler implements EventHandler {
 
     protected Map<String, String> mapping;
 
-    protected String key;
+    protected String[] key;
 
     protected List<EventDataExecuter> eventPlugins = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public abstract class AbstractEventHandler implements EventHandler {
     }
 
     @Override
-    public void setKey(String key) {
+    public void setKey(String[] key) {
         this.key = key;
     }
 
@@ -71,6 +71,19 @@ public abstract class AbstractEventHandler implements EventHandler {
             return;
         }
         this.eventPlugins.add(eventPlugin);
+    }
+
+    /**
+     * 获取对应的ids
+     *
+     * @return
+     */
+    protected String[] ids() {
+        String[] ids = new String[key.length];
+        for (int i = 0; i < key.length; i++) {
+            ids[i] = mapping.get(key[i]);
+        }
+        return ids;
     }
 
     @Override

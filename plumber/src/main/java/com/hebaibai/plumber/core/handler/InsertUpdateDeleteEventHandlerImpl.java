@@ -70,7 +70,7 @@ public class InsertUpdateDeleteEventHandlerImpl extends AbstractEventHandler imp
     }
 
     @Override
-    public void setKey(String key) {
+    public void setKey(String[] key) {
         for (AbstractEventHandler eventHandler : eventHandlers) {
             eventHandler.key = key;
         }
