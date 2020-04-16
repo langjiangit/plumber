@@ -9,7 +9,8 @@
 
 ### 使用条件
 
-mysql开启binlog记录, 格式为ROW
+mysql开启binlog记录, 格式为ROW,
+mysql版本在5.7及以上
 
 ### 安装启动说明
 
