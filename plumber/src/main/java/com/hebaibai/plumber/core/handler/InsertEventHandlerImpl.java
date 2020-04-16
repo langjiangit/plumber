@@ -33,9 +33,27 @@ public class InsertEventHandlerImpl extends AbstractEventHandler implements Even
         return sourceDatabase.equals(dataBaseName) && sourceTable.equals(tableName);
     }
 
+    /**
+     * 修改 bug : 执行 insert into table values(111),(222);时 222 无法同步 2020年04月16日10:29:31
+     *
+     * @param eventBus
+     * @param data
+     */
     @Override
     public void handle(EventBus eventBus, EventData data) {
-        String[] rows = EventDataUtils.getInsertRows(data);
+        String[][] insertRowsArray = EventDataUtils.getInsertRows(data);
+        for (int x = 0; x < insertRowsArray.length; x++) {
+            String[] rows = insertRowsArray[x];
+            oneRow(rows);
+        }
+    }
+
+    /**
+     * 同步一行数据
+     *
+     * @param rows
+     */
+    void oneRow(String[] rows) {
         List<String> columns = sourceTableMateData.getColumns();
         Map<String, String> eventAfterData = new HashMap<>();
         for (int i = 0; i < columns.size(); i++) {

@@ -105,7 +105,13 @@ public class EventDataUtils {
         return val;
     }
 
-    public static String[] getInsertRows(EventData data) {
+    /**
+     * 修改 bug : 执行 insert into table values(111),(222);时 222 无法同步 2020年04月16日10:29:31
+     *
+     * @param data
+     * @return
+     */
+    public static String[][] getInsertRows(EventData data) {
         WriteRowsEventData writeRowsEventData = getWriteRowsEventData(data);
         if (writeRowsEventData == null) {
             return null;
@@ -114,7 +120,11 @@ public class EventDataUtils {
         if (rows.size() == 0) {
             return null;
         }
-        return values(rows.get(0));
+        String[][] values = new String[rows.size()][];
+        for (int i = 0; i < rows.size(); i++) {
+            values[i] = values(rows.get(i));
+        }
+        return values;
     }
 
     public static String[] getDeleteRows(EventData data) {

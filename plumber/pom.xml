@@ -5,7 +5,7 @@
 
     <groupId>com.hebaibai</groupId>
     <artifactId>plumber</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>plumber-jar</name>
     <description>data sync util</description>
 
